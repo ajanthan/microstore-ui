@@ -17,7 +17,7 @@ class App extends React.Component {
         var sCart=this.state.cart;
         var found=false;
         sCart.forEach(iteam => {
-            if(iteam.name==name){
+            if(iteam.name===name){
                 iteam.count+=1;
                 found=true;
             }

@@ -2,19 +2,7 @@ import React from 'react'
 import './index.css';
 import 'bootstrap/dist/css/bootstrap.min.css'
 
-const ORDERS = [
-    { id: 1, name: 'Car', amount: 2 },
-    { id: 2, name: 'Bicycle', amount: 2 },
-    { id: 3, name: 'Sugar', amount: 1 }
-]
-
 class Cart extends React.Component {
-    constructor(props) {
-        super(props);
-        
-    }
-
-    
     render() {
         return (
             <table className="table">
