@@ -1,56 +1,53 @@
-import React from 'react';
+import React, { useReducer } from 'react';
 import './index.css';
-import 'bootstrap/dist/css/bootstrap.min.css'
-import Header from './header'
-import ProductList from './productList'
-import Cart from './cart'
+import 'bootstrap/dist/css/bootstrap.min.css';
+import Header from './header';
+import ProductList from './productList';
+import Cart from './cart';
+import CartContext from './cartContext';
 
-class App extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            cart: []
-        }
-        this.handleAddToCart = this.handleAddToCart.bind(this);
-    }
-    handleAddToCart(name) {
-        var sCart=this.state.cart;
-        var found=false;
-        sCart.forEach(iteam => {
-            if(iteam.name===name){
-                iteam.count+=1;
-                found=true;
+const reducer = (state, action) => {
+    switch (action.type) {
+        case 'updateCart':
+            let found = state.find(item => (item.name === action.payload.name)); 
+            if (found) {
+                found.count=found.count+1;
+            }else{
+                found={ name: action.payload.name, count: 1 };
             }
-            
-        });
-        if(!found){
-            sCart.push({name:name,count:1}); 
-        }
-        // if(sCart[name]==undefined){  
-        //     sCart[name]=0;
-        // }
-       // sCart.push({name:name,count:1});
-        this.setState({cart:sCart});
-        console.log("Adding " + name);
-    }
-    render() {
-        return (
-            <div>
-                <Header />
-                <div className='container py-5'>
-                <div className='row'>
-                <div className="col-md-9">
-                <ProductList handlecart={this.handleAddToCart} />
-                </div>
-                <div className="col-md-3">
-                <Cart cart={this.state.cart} />
-                </div>
-                </div>
-                </div>
-            </div>
-        );
+            let remains=state.filter(item => (item.name !== action.payload.name));
+            return [...remains,found];
+        default:
+            return state;
     }
 }
+
+const App = () => {
+    const [cart, updateCart] = useReducer(reducer, []);
+
+    const handleAddToCart = (name) => {
+        updateCart({ type: 'updateCart', payload: { name: name } });
+        console.log("Adding " + name+"to"+cart);
+    }
+    return (
+        <div>
+            <CartContext.Provider value={{cart:cart,addToCart:handleAddToCart}}>
+            <Header />
+            <div className='container py-5'>
+                <div className='row'>
+                    <div className="col-md-9">
+                        <ProductList/>
+                    </div>
+                    <div className="col-md-3">
+                        <Cart cart={cart} />
+                    </div>
+                </div>
+            </div>
+            </CartContext.Provider>
+        </div>
+    );
+}
+
 
 export default App;
 

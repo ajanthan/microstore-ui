@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState, useEffect,useContext } from 'react';
 import './index.css';
 import 'bootstrap/dist/css/bootstrap.min.css'
-import Product from './product'
+import Product from './product';
+import CartContext from './cartContext';
 
 const PRODUCTS = [
     { id: 1, name: 'Car', description: 'This is a sample product', price: 12.0, tags: ['test', 'vehicle'] },
@@ -16,37 +17,28 @@ const PRODUCTS = [
     { id: 10, name: 'Beer', description: 'This is a sample product', price: 120.0, tags: ['test', 'vehicle'] }
 ];
 
-class ProductList extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            products: []
-        };
-        this.handleAddToCart=this.handleAddToCart.bind(this);
+const ProductList = () => {
+    const [products, setProducts] = useState([]);
+    const cartContext=useContext(CartContext);
+    useEffect(() => {
+        setProducts(PRODUCTS);
+    }, []);
+
+    const handleAddToCart = (name) => {
+        console.log("Adding from plist " + name);
+        cartContext.addToCart(name);
     }
-    componentDidMount() {
-        this.setState({
-            products: PRODUCTS
-        });
-    }
-    handleAddToCart(name){
-        console.log("Adding from plist "+name);
-        this.props.handlecart(name);
-        
-    }
-    render() {
-        return (
-            <div className='card-columns'>
-                {this.state.products.map(product =>
-                    <Product 
-                        id={product.id}
-                        name={product.name}
-                        image={'https://loremflickr.com/320/240/' + product.name + '?random=' + product.id}
-                        description={product.description}
-                        tags={product.tags} addToCart={this.handleAddToCart}/>)
-                }
-            </div>);
-    }
+    return (
+        <div className='card-columns'>
+            {products.map(product =>
+                <Product
+                    id={product.id}
+                    name={product.name}
+                    image={'https://loremflickr.com/320/240/' + product.name + '?random=' + product.id}
+                    description={product.description}
+                    tags={product.tags} addToCart={handleAddToCart} />)
+            }
+        </div>);
 }
 
 export default ProductList;
