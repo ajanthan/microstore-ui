@@ -1,19 +1,19 @@
-import React,{useContext} from 'react'
+import React, { useContext } from 'react'
 import './index.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import CartContext from './cartContext';
 
 
 const Cart = () => {
-    const cartContext=useContext(CartContext);
+    const cartContext = useContext(CartContext);
     return (
         <table className="table">
             <tbody>
-            <tr>
-    <th className="align-center">Shopping Chart</th>
-            </tr>
+                <tr>
+                    <th className="align-center">Shopping Chart</th>
+                </tr>
                 {
-                    cartContext.cart.map(item => 
+                    cartContext.cart.map(item =>
                         <tr>
                             <td>
                                 <div>{item.name}</div>
@@ -24,7 +24,7 @@ const Cart = () => {
                             <td><a className="btn btn-danger" value="Delete">Delete</a></td>
                             <td><a className="btn btn-primary" value="update">Update</a></td>
                         </tr>
-                    
+
                     )
                 }
             </tbody>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect,useContext } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import './index.css';
 import 'bootstrap/dist/css/bootstrap.min.css'
 import Product from './product';
@@ -19,7 +19,7 @@ const PRODUCTS = [
 
 const ProductList = () => {
     const [products, setProducts] = useState([]);
-    const cartContext=useContext(CartContext);
+    const cartContext = useContext(CartContext);
     useEffect(() => {
         setProducts(PRODUCTS);
     }, []);
