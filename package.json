@@ -4,6 +4,8 @@
   "homepage": "https://ajanthan.github.io/microstore-ui",
   "private": true,
   "dependencies": {
+    "@ajanthan/wso2identity-js": "^0.1.8",
+    "@popperjs/core": "^2.4.0",
     "bootstrap": "^4.4.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
